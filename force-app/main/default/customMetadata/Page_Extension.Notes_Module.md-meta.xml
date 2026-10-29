@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Notes</label>
+    <protected>false</protected>
+    <values><field>ObjectApiName__c</field><value xsi:type="xsd:string">Account</value></values>
+    <values><field>Slot__c</field><value xsi:type="xsd:string">Tabs</value></values>
+    <values><field>ComponentName__c</field><value xsi:type="xsd:string">noteExtension</value></values>
+    <values><field>SortOrder__c</field><value xsi:type="xsd:double">20</value></values>
+    <values><field>PropertiesJson__c</field><value xsi:type="xsd:string">{&quot;heading&quot;:&quot;Account notes&quot;}</value></values>
+    <values><field>IsActive__c</field><value xsi:type="xsd:boolean">true</value></values>
+</CustomMetadata>

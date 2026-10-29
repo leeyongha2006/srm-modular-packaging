@@ -69,6 +69,30 @@ flowchart TB
 ### 5. 전자계약 연동
 - 발주가 확정되면 계약을 자동 생성하고, 최종 서명 시점에 단가를 만들면서 기간이 겹치는 기존 단가는 종료합니다.
 
+## 예제 코드
+
+Core 가 모듈을 모르게 만드는 **확장 슬롯 구조를 독립적으로 다시 구현한 예제**입니다. 회사 코드가 아니며, 표준 Account 페이지에 예제 모듈 두 개가 탭으로 붙습니다.
+
+| 파일 | 역할 |
+|---|---|
+| [`Page_Extension__mdt`](force-app/main/default/objects/Page_Extension__mdt) | 등록 정보: 오브젝트, 자리(slot), 컴포넌트, 순서, 속성 JSON, 활성 여부 |
+| [`PageExtensionController.cls`](force-app/main/default/classes/PageExtensionController.cls) | 오브젝트 · 자리에 맞는 활성 등록을 순서대로 반환. 네임스페이스 유무를 모두 처리하고, 패키지가 등록한 컴포넌트는 그 패키지 네임스페이스로 모듈 경로를 만든다 |
+| [`extensionSlot`](force-app/main/default/lwc/extensionSlot) | 등록된 컴포넌트를 **동적 import** 로 불러와 탭 또는 세로 배치로 그림. 설치되지 않은 컴포넌트는 건너뜀 |
+| [`contactListExtension`](force-app/main/default/lwc/contactListExtension) · [`noteExtension`](force-app/main/default/lwc/noteExtension) | 예제 모듈. 슬롯이 `recordId` 와 등록 속성을 넘겨준다 |
+| [`customMetadata`](force-app/main/default/customMetadata) | 예제 등록 두 건 (Account / Tabs) |
+
+새 모듈을 붙일 때 Core 코드는 바꾸지 않습니다. 모듈 패키지가 컴포넌트와 `Page_Extension__mdt` 레코드 하나만 함께 배포하면 됩니다.
+
+### 직접 실행
+
+```bash
+sf org create scratch -f config/project-scratch-def.json -a slot-demo
+sf project deploy start -o slot-demo -d force-app --test-level RunLocalTests
+```
+
+배포 후 Account 레코드 페이지에 `Extension Slot` 컴포넌트를 놓으면 Contacts · Notes 탭이 나타납니다.
+스크래치 org 에서 테스트 6개 통과, 커버리지 94% (2026-10-30 확인).
+
 ## 배운 점
 
 - 패키지 경계는 기능이 아니라 **의존 방향**으로 나눠야 오래 버틴다는 것

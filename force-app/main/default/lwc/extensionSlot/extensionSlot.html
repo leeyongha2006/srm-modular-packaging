@@ -1,0 +1,23 @@
+<template>
+    <template lwc:if={errorMessage}>
+        <div class="slds-text-color_error slds-var-p-around_small">{errorMessage}</div>
+    </template>
+    <template lwc:if={hasExtensions}>
+        <template lwc:if={isStack}>
+            <template for:each={extensions} for:item="extension">
+                <div key={extension.key} class="slds-var-m-bottom_medium">
+                    <lwc:component lwc:is={extension.ctor} lwc:spread={extension.props}></lwc:component>
+                </div>
+            </template>
+        </template>
+        <template lwc:else>
+            <lightning-tabset>
+                <template for:each={extensions} for:item="extension">
+                    <lightning-tab key={extension.key} label={extension.label} value={extension.key}>
+                        <lwc:component lwc:is={extension.ctor} lwc:spread={extension.props}></lwc:component>
+                    </lightning-tab>
+                </template>
+            </lightning-tabset>
+        </template>
+    </template>
+</template>
